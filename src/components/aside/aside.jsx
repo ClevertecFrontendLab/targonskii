@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import './aside.css';
 
-export const Aside = () => {
+export const Aside = ({ categories }) => {
   const [isHide, setIsHide] = useState(true);
   const [ref, isShow] = useOutletContext();
   const burgerWigth = window.innerWidth > 768;
@@ -34,76 +34,14 @@ export const Aside = () => {
         <NavLink data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'} to='/books/allbooks'>
           Все книги
         </NavLink>
-        <div>
-          <NavLink to='/books/business'>
-            Бизнес-книги<span>14</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/detective'>
-            Детективы <span>8</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/children'>
-            Детские книги<span>14</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/foreign'>
-            Зарубежная литература <span>2</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/history'>
-            История <span>5</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/classic'>
-            Классическая литература <span>12</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/psychology'>
-            Книги по психологии <span>11</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/computer'>
-            Компьютерная литература <span>54</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/culture'>
-            Культура и искусство <span>5</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/science'>
-            Наука и образование <span>2</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/journalism'>
-            Публицистическая <br /> литература <span>0</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/directory'>
-            Справочники <span>10</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/fantastic'>
-            Фантастика <span>12</span>
-          </NavLink>
-        </div>
-        <div>
-          <NavLink to='/books/humor'>
-            Юмористическая <br /> литература <span>8</span>
-          </NavLink>
-        </div>
+        {categories.map((category) => (
+          <div key={category.id}>
+            <NavLink to={`/books/${category.path}`}>
+              {category.name}
+              <span>15</span>
+            </NavLink>
+          </div>
+        ))}
       </div>
       <h5>
         <NavLink data-test-id={burgerWigth ? 'navigation-terms' : 'burger-terms'} to='/rules'>

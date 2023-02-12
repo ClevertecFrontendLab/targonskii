@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import { apiBooksListUrl } from '../../constants/urls.js';
 
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
     async () => {
-        const books = await axios.get(apiBooksListUrl).then(book => book);
+        const books = await fetch(apiBooksListUrl)
+            .then(responce => responce.json())
+            .then(data => data);
 
         return books;
     }
@@ -21,9 +22,15 @@ const bookListSlice = createSlice({
     },
     reducers: {
         getBooks(state, action) {
-            state.books.push(action.payload)
+            state.booksList.push(action.payload)
         }
     },
+    // extraReducers: (builder) => {
+    //     builder
+    //         .fetchBooks(pending, (state) => {
+
+    //         })
+    // }
     extraReducers: {
         [fetchBooks.pending]: (state) => {
             state.status = 'loading';
@@ -33,7 +40,10 @@ const bookListSlice = createSlice({
             state.status = 'resolved';
             state.booksList = action.payload
         },
-        [fetchBooks.rejected]: (state) => { },
+        [fetchBooks.rejected]: (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message
+        }
     }
 });
 

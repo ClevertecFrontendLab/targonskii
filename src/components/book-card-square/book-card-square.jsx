@@ -1,28 +1,29 @@
 import unknownBookImageSmall from '../../assets/images/unknown-book-image-small.svg';
+import { hostUrl } from '../../constants/urls';
 
 import './book-card-square.css';
 
 export const BookCardSquare = ({ book }) => (
   <div className='book-card-square'>
-    <img src={book.image.length === 0 ? unknownBookImageSmall : book.image[0].img} alt='book-img' />
-    {book.evaluation ? (
+    <img src={book.image === null ? unknownBookImageSmall : hostUrl + book.image.url} alt='book-img' />
+    {book.rating ? (
       <div className='book-card-square__evaluation' />
     ) : (
       <div className='book-card-square__evaluation-empty'>
         <p>еще нет оценок</p>
       </div>
     )}
-    <p>{book.bookName}</p>
+    <p>{book.title.slice(0, 30)}...</p>
     <p>
-      {book.author}, {book.year}
+      {book.authors}, {book.issueYear}
     </p>
-    {book.availability === 'available' ? (
+    {book.booking === null ? (
       <button type='button' className='book-card-square__button--active'>
         ЗАБРОНИРОВАТЬ
       </button>
-    ) : book.availability === 'busy' ? (
+    ) : book.booking.order === true ? (
       <button type='button' className='book-card-square__button--busy'>
-        ЗАНЯТА ДО {book.date}
+        ЗАНЯТА ДО {new Date(book.booking.dateOrder).toLocaleDateString().slice(0, 5)}
       </button>
     ) : (
       <button type='button' className='book-card-square__button--booked'>

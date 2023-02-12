@@ -6,7 +6,7 @@ import bookImage4 from '../assets/images/book4.jpg';
 
 
 
-export const booksList1 = [
+export const books = [
     {
         bookName: 'Грокаем алгоритмы. Иллюстрированное пособие для програ...',
         evaluation: 4.3,
