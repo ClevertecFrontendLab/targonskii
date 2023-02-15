@@ -1,17 +1,31 @@
+import avatarReview from '../../assets/images/avatar-review.jpg';
+
 import './review.css';
 
 export const Review = ({ review }) => (
   <div className='review'>
     <div className='review__user'>
-      <img src={review.avatar} alt='avatar-review' />
-      <p>{review.user}</p>
-      <p>{review.date}</p>
+      {review.user.avatarUrl === null ? (
+        <img src={avatarReview} alt='avatar-review' />
+      ) : (
+        <img src={review.user.avatarUrl} alt='avatar-review' />
+      )}
+      <p>
+        {review.user.firstName} {review.user.lastName}
+      </p>
+      <p>{new Date(review.createdAt).toUTCString().slice(5, 16)}</p>
     </div>
     <div className='review__user-mobile'>
-      <img src={review.avatar} alt='avatar-review' />
+      {review.user.avatarUrl === null ? (
+        <img src={avatarReview} alt='avatar-review' />
+      ) : (
+        <img src={review.user.avatarUrl} alt='avatar-review' />
+      )}
       <div className='review__user-mobile-wrapper'>
-        <p>{review.user}</p>
-        <p className='review__user-mobile-date'>{review.date}</p>
+        <p>
+          {review.user.firstName} {review.user.lastName}
+        </p>
+        <p className='review__user-mobile-date'>{new Date(review.createdAt).toUTCString().slice(5, 16)}</p>
       </div>
     </div>
     <p>{review.text ? review.text : ''}</p>

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { hostUrl } from '../../constants/urls';
+
 import './slider.css';
 
 import 'swiper/css';
 
-export const Slider = (imageArr) => {
+export const Slider = ({ imageArr }) => {
   const [activeThumb, setActiveThumb] = useState(null);
 
   return (
@@ -20,9 +22,9 @@ export const Slider = (imageArr) => {
         thumbs={{ swiper: activeThumb && !activeThumb.destroyed ? activeThumb : null }}
         className='slider'
       >
-        {imageArr.imageArr.map((item) => (
+        {imageArr.map((item) => (
           <SwiperSlide key={item.id}>
-            <img src={item.img} alt='slider' />
+            <img src={hostUrl + item.url} alt='slider' />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -34,13 +36,17 @@ export const Slider = (imageArr) => {
         slidesPerView={4}
         className='slider-thumbs'
       >
-        <div className='slider-thumbs-wrapper'>
-          {imageArr.imageArr.map((item) => (
-            <SwiperSlide data-test-id='slide-mini' key={item.id}>
-              <img src={item.img} alt='slider' />
-            </SwiperSlide>
-          ))}
-        </div>
+        {imageArr.length === 1 ? (
+          ''
+        ) : (
+          <div className='slider-thumbs-wrapper'>
+            {imageArr.map((item) => (
+              <SwiperSlide data-test-id='slide-mini' key={item.id}>
+                <img src={hostUrl + item.url} alt='slider' />
+              </SwiperSlide>
+            ))}
+          </div>
+        )}
       </Swiper>
     </React.Fragment>
   );

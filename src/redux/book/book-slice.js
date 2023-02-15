@@ -3,13 +3,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiBookUrl } from '../../constants/urls.js';
 
 export const fetchBook = createAsyncThunk(
-    'book/fetchBook',
-    async (id) => {
-        const book = await fetch(apiBookUrl + id)
-            .then(responce => responce.json())
-            .then(data => data);
+    'books/fetchBook',
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(apiBookUrl + id);
 
-        return book;
+            if (!response.ok) {
+                throw new Error('Server Error');
+            }
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
     }
 )
 

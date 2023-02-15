@@ -1,0 +1,46 @@
+.error {
+  width: 1100px;
+  height: 80px;
+  display: flex;
+  background-color: var(--pink);
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  border: 1px solid var(--negative);
+  top: 55px;
+  left: 165px;
+}
+
+.error p {
+  position: relative;
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: var(--dark);
+  padding-left: 88px;
+}
+
+.error p::after {
+  position: absolute;
+  content: url('../../assets/images/warning-circle.svg');
+  top: -3px;
+  left: 31px;
+}
+
+.error button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-style: none;
+  background: none;
+}
+
+.error button::after {
+  position: absolute;
+  content: url('../../assets/images/close-24.svg');
+  top: 8px;
+  left: 6px;
+}

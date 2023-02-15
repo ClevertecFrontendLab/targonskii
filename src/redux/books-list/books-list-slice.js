@@ -4,12 +4,19 @@ import { apiBooksListUrl } from '../../constants/urls.js';
 
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
-    async () => {
-        const books = await fetch(apiBooksListUrl)
-            .then(responce => responce.json())
-            .then(data => data);
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch(apiBooksListUrl);
 
-        return books;
+            if (!response.ok) {
+                throw new Error('Server Error');
+            }
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
     }
 )
 
@@ -25,12 +32,6 @@ const bookListSlice = createSlice({
             state.booksList.push(action.payload)
         }
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .fetchBooks(pending, (state) => {
-
-    //         })
-    // }
     extraReducers: {
         [fetchBooks.pending]: (state) => {
             state.status = 'loading';
@@ -42,7 +43,7 @@ const bookListSlice = createSlice({
         },
         [fetchBooks.rejected]: (state, action) => {
             state.status = 'failed';
-            state.error = action.error.message
+            state.error = action.payload;
         }
     }
 });
