@@ -23,13 +23,14 @@ export const fetchBook = createAsyncThunk(
 const bookSlice = createSlice({
     name: 'book',
     initialState: {
-        book: [],
+        book: null,
         status: null,
         error: null
     },
     reducers: {
         getBook(state, action) {
-            state.book.push(action.payload)
+            // state.book.push(action.payload)
+            state.book = [...state.book, action.payload]
         }
     },
     extraReducers: {

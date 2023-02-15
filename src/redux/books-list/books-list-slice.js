@@ -17,7 +17,18 @@ export const fetchBooks = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error.message)
         }
-    }
+    },
+    // {
+    //     condition: ({ getState }) => {
+    //         const { booksList } = getState();
+    //         // const fetchStatus = data.requests;
+    //         if (booksList) {
+    //             return false
+    //         }
+
+    //         return true;
+    //     },
+    // }
 )
 
 const bookListSlice = createSlice({

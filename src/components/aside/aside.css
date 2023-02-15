@@ -13,8 +13,11 @@ aside button {
 
 .aside__button {
   position: relative;
-  background: none;
-  color: var(--dark);
+  background: linear-gradient(var(--btn-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: left;
 }
 
 .aside {

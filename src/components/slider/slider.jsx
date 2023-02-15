@@ -23,7 +23,7 @@ export const Slider = ({ imageArr }) => {
         className='slider'
       >
         {imageArr.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item.url}>
             <img src={hostUrl + item.url} alt='slider' />
           </SwiperSlide>
         ))}
@@ -41,7 +41,7 @@ export const Slider = ({ imageArr }) => {
         ) : (
           <div className='slider-thumbs-wrapper'>
             {imageArr.map((item) => (
-              <SwiperSlide data-test-id='slide-mini' key={item.id}>
+              <SwiperSlide data-test-id='slide-mini' key={item.url}>
                 <img src={hostUrl + item.url} alt='slider' />
               </SwiperSlide>
             ))}
