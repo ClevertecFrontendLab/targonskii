@@ -4,13 +4,20 @@ import { apiCategoriesUrl } from '../../constants/urls.js';
 
 export const fetchCategories = createAsyncThunk(
     'categories/fetchCategories',
-    async () => {
-        const categories = await fetch(apiCategoriesUrl)
-            .then(responce => responce.json())
-            .then(data => data);
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch(apiCategoriesUrl);
 
-        return categories;
-    }
+            if (!response.ok) {
+                throw new Error('Server Error');
+            }
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    },
 )
 
 const categoriesSlice = createSlice({

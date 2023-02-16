@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Aside } from '../../components/aside/aside.jsx';
@@ -23,25 +23,28 @@ export const MainPage = () => {
 
     const { status, error } = useSelector((state) => state.bookList);
     const books = useSelector((state) => state.bookList.booksList);
+    const statusCategories = useSelector((state) => state.categories.status);
+    const errorCategories = useSelector((state) => state.categories.error);
     const categories = useSelector((state) => state.categories.categories);
 
     return (
         <main>
             <div className='main-page'>
-                <Aside categories={categories} />
-                {status === 'loading' || !status ? (
+                {status === 'loading' || !status || statusCategories === 'loading' || !statusCategories ? (
                     <Loading />
-                ) : error ? (
-                    <Error />
+                ) : error || errorCategories ? (
+                    <React.Fragment>
+                        <Error />
+                        <Aside categories={null} />
+                    </React.Fragment>
                 ) : (
-                    <div className='main-page__books'>
-                        <BooksMenu viewBooks={viewBooks} setViewBooks={setViewBooks} />
-                        {viewBooks ? (
-                            <BooksSquare books={books} categories={categories} />
-                        ) : (
-                            <BooksList books={books} categories={categories} />
-                        )}
-                    </div>
+                    <React.Fragment>
+                        <Aside categories={categories} />
+                        <div className='main-page__books'>
+                            <BooksMenu viewBooks={viewBooks} setViewBooks={setViewBooks} />
+                            {viewBooks ? <BooksSquare books={books} /> : <BooksList books={books} />}
+                        </div>
+                    </React.Fragment>
                 )}
             </div>
         </main>

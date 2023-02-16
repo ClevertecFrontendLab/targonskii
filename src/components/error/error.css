@@ -1,14 +1,18 @@
 .error {
     width: 100%;
+    max-width: 1110px;
+    margin: 0 auto;
     height: 80px;
     display: flex;
     background-color: var(--pink);
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    top: -90px;
+    position: fixed;
+    top: 55px;
+    left: 165px;
     border: 1px solid var(--negative);
     border-radius: 5px;
+    z-index: 5;
 }
 
 .error p {
@@ -48,7 +52,9 @@
 @media only screen and (min-width: 769px) and (max-width: 1280px) {
     .error {
         height: 76px;
-        top: -68px;
+        top: 55px;
+        left: 165px;
+        max-width: 900px;
     }
     .error p {
         font-size: 14px;
@@ -66,7 +72,9 @@
 @media only screen and (min-width: 321px) and (max-width: 768px) {
     .error {
         height: 76px;
-        top: -68px;
+        top: 55px;
+        left: 64px;
+        max-width: 640px;
     }
     .error p {
         font-size: 14px;
@@ -91,7 +99,9 @@
 
 @media only screen and (max-width: 320px) {
     .error {
-        top: -68px;
+        top: 55px;
+        left: 20px;
+        max-width: 280px;
     }
     .error p {
         font-size: 14px;

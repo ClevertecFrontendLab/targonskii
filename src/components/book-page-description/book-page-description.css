@@ -21,6 +21,7 @@
 }
 
 .book-page__path {
+    width: 100%;
     background-color: var(--grey5);
     height: 64px;
     font-weight: 400;
@@ -37,15 +38,15 @@
     margin: 0 32px 0 165px;
 }
 
-.book-page__path span:last-child {
+.book-page__path span:first-child {
     position: relative;
 }
 
-.book-page__path span:last-child:before {
+.book-page__path span:first-child:before {
     position: absolute;
     content: url('../../assets/images/path-slash.svg');
     top: 0px;
-    left: -20px;
+    left: 113px;
 }
 
 .book-page__about-book {

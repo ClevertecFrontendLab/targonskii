@@ -13,7 +13,7 @@ export const BookPageDescription = ({ bookCard }) => {
     return (
         <div className='book-page'>
             <div className='book-page__path'>
-                <span>{bookCard.categories}</span>
+                <span>{bookCard.categories} книги</span>
                 <span>{bookCard.title}</span>
             </div>
             <div className='book-page__wrapper'>
