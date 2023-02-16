@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import classNames from 'classnames';
 
-import unknownBookImage from '../../assets/images/unknown-book-image.svg';
 import { Aside } from '../../components/aside/aside';
+import { BookPageDescription } from '../../components/book-page-description/book-page-description';
+import { Error } from '../../components/error/error.jsx';
 import { Loading } from '../../components/loading/loading.jsx';
-import { Review } from '../../components/review/review';
-import { Slider } from '../../components/slider/slider';
 import { fetchBook } from '../../redux/book/book-slice';
 import { fetchCategories } from '../../redux/categories/categories-slice';
 
@@ -20,8 +18,7 @@ export const BookPage = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
-    const [isHide, setIsHide] = useState(true);
-    const { status } = useSelector((state) => state.book);
+    const { status, error } = useSelector((state) => state.book);
     const bookCard = useSelector((state) => state.book.book);
     const categories = useSelector((state) => state.categories.categories);
 
@@ -35,128 +32,10 @@ export const BookPage = () => {
             <Aside categories={categories} />
             {status === 'loading' || !status ? (
                 <Loading />
+            ) : error ? (
+                <Error />
             ) : (
-                <div className='book-page'>
-                    <div className='book-page__path'>
-                        <span>{bookCard.categories}</span>
-                        <span>{bookCard.title}</span>
-                    </div>
-                    <div className='book-page__wrapper'>
-                        <div className='book-page__book'>
-                            <div className='book-page__img-book'>
-                                {bookCard.images === null ? (
-                                    <img src={unknownBookImage} alt='unknownBookImage' />
-                                ) : (
-                                    <Slider imageArr={bookCard.images} />
-                                )}
-                            </div>
-                            <div className='book-page__about-book'>
-                                <p>{bookCard.title}</p>
-                                <p>
-                                    {bookCard.authors}, {bookCard.issueYear}
-                                </p>
-                                {bookCard.booking === null ? (
-                                    <button type='button' className='book-card-square__button--active'>
-                                        ЗАБРОНИРОВАТЬ
-                                    </button>
-                                ) : bookCard.booking.order === true ? (
-                                    <button type='button' className='book-card-square__button--busy'>
-                                        ЗАНЯТА ДО{' '}
-                                        {new Date(bookCard.booking.dateOrder).toLocaleDateString().slice(0, 5)}
-                                    </button>
-                                ) : (
-                                    <button type='button' className='book-card-square__button--booked'>
-                                        ЗАБРОНИРОВАНА
-                                    </button>
-                                )}
-                                <div className='book-page__about'>
-                                    <p>О книге</p>
-                                    <p>{bookCard.description}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='book-page__about--mobile'>
-                            <p>О книге</p>
-                            <p>{bookCard.description}</p>
-                        </div>
-                        <div className='book-page__information'>
-                            <div className='book-page__rating'>
-                                <p>Рейтинг</p>
-                                <div className='book-page__seporator' />
-                                <p>{bookCard.rating}</p>
-                            </div>
-                            <div className='book-page__description'>
-                                <p>Подробная информация</p>
-                                <div className='book-page__seporator' />
-                                <div className='book-page__description-wrapper'>
-                                    <div className='book-page__descripton-first'>
-                                        <p>
-                                            Издательство <span>{bookCard.publish}</span>
-                                        </p>
-                                        <p>
-                                            Год издания <span>{bookCard.issueYear}</span>
-                                        </p>
-                                        <p>
-                                            Страниц <span>{bookCard.pages}</span>
-                                        </p>
-                                        <p>
-                                            Переплёт <span>{bookCard.cover}</span>
-                                        </p>
-                                        <p>
-                                            Формат <span>{bookCard.format}</span>
-                                        </p>
-                                    </div>
-                                    <div className='book-page__descripton-second'>
-                                        <p>
-                                            Жанр <span>{bookCard.categories}</span>
-                                        </p>
-                                        <p>
-                                            Вес <span>{bookCard.weight} г.</span>
-                                        </p>
-                                        <p>
-                                            ISBN <span>{bookCard.ISBN}</span>
-                                        </p>
-                                        <p>
-                                            Изготовитель <span>{bookCard.producer}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='book-page__review'>
-                                <div className='book-page__review-header'>
-                                    <p>
-                                        Отзывы{' '}
-                                        {bookCard.comments === null ? (
-                                            <span>0</span>
-                                        ) : (
-                                            <span>{bookCard.comments.length}</span>
-                                        )}
-                                    </p>
-                                    <button
-                                        data-test-id='button-hide-reviews'
-                                        className={classNames('book-page__review-button', { hide: isHide })}
-                                        type='button'
-                                        aria-label='book-page__review-button'
-                                        onClick={() => setIsHide(!isHide)}
-                                    />
-                                </div>
-                                {bookCard.comments === null ? (
-                                    ''
-                                ) : (
-                                    <div className={classNames('book-page__review-card', { hide: isHide })}>
-                                        <div className='book-page__seporator' />
-                                        {bookCard.comments.map((review) => (
-                                            <Review review={review} key={review.id} />
-                                        ))}
-                                    </div>
-                                )}
-                                <button data-test-id='button-rating' type='button'>
-                                    Оценить книгу
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <BookPageDescription bookCard={bookCard} />
             )}
         </main>
     );

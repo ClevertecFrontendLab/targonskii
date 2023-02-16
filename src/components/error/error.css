@@ -1,46 +1,114 @@
 .error {
-  width: 1100px;
-  height: 80px;
-  display: flex;
-  background-color: var(--pink);
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  border: 1px solid var(--negative);
-  top: 55px;
-  left: 165px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    background-color: var(--pink);
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: -90px;
+    border: 1px solid var(--negative);
+    border-radius: 5px;
 }
 
 .error p {
-  position: relative;
-  margin: 0;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.1px;
-  color: var(--dark);
-  padding-left: 88px;
+    position: relative;
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: var(--dark);
+    padding-left: 88px;
 }
 
 .error p::after {
-  position: absolute;
-  content: url('../../assets/images/warning-circle.svg');
-  top: -3px;
-  left: 31px;
+    position: absolute;
+    content: url('../../assets/images/warning-circle-24.svg');
+    top: -3px;
+    left: 31px;
 }
 
 .error button {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
-  border-style: none;
-  background: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border-style: none;
+    background: none;
 }
 
 .error button::after {
-  position: absolute;
-  content: url('../../assets/images/close-24.svg');
-  top: 8px;
-  left: 6px;
+    position: absolute;
+    content: url('../../assets/images/close-24.svg');
+    top: 8px;
+    left: 6px;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1280px) {
+    .error {
+        height: 76px;
+        top: -68px;
+    }
+    .error p {
+        font-size: 14px;
+        line-height: 16px;
+        padding-left: 52px;
+    }
+    .error p::after {
+        position: absolute;
+        content: url('../../assets/images/warning-circle-18.svg');
+        top: -3px;
+        left: 17px;
+    }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+    .error {
+        height: 76px;
+        top: -68px;
+    }
+    .error p {
+        font-size: 14px;
+        line-height: 18px;
+        padding-left: 52px;
+    }
+
+    .error p::after {
+        position: absolute;
+        content: url('../../assets/images/warning-circle-18.svg');
+        top: -3px;
+        left: 17px;
+    }
+
+    .error button::after {
+        position: absolute;
+        content: url('../../assets/images/close-16.svg');
+        top: 8px;
+        left: 21px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .error {
+        top: -68px;
+    }
+    .error p {
+        font-size: 14px;
+        line-height: 18px;
+        padding-left: 52px;
+    }
+    .error p::after {
+        position: absolute;
+        content: url('../../assets/images/warning-circle-18.svg');
+        top: 0px;
+        left: 16px;
+    }
+
+    .error button::after {
+        position: absolute;
+        content: url('../../assets/images/close-16.svg');
+        top: -8px;
+        left: 3px;
+    }
 }
