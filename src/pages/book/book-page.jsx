@@ -7,7 +7,6 @@ import { BookPageDescription } from '../../components/book-page-description/book
 import { Error } from '../../components/error/error.jsx';
 import { Loading } from '../../components/loading/loading.jsx';
 import { fetchBook } from '../../redux/book/book-slice';
-import { fetchCategories } from '../../redux/categories/categories-slice';
 
 import './book-page.css';
 
@@ -24,7 +23,6 @@ export const BookPage = () => {
 
     useEffect(() => {
         dispatch(fetchBook(id));
-        dispatch(fetchCategories());
     }, [dispatch, id]);
 
     return (
