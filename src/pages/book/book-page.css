@@ -1,0 +1,9 @@
+main .aside.hide {
+    display: none;
+}
+
+@media only screen and (max-width: 320px) {
+    .aside {
+        left: 16px;
+    }
+}
