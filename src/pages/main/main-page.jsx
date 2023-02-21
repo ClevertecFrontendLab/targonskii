@@ -15,6 +15,7 @@ import './main-page.css';
 export const MainPage = () => {
     const dispatch = useDispatch();
     const [viewBooks, setViewBooks] = useState(true);
+    const [searchStr, setSearchStr] = useState('');
 
     useEffect(() => {
         dispatch(fetchBooks());
@@ -26,6 +27,10 @@ export const MainPage = () => {
     const statusCategories = useSelector((state) => state.categories.status);
     const errorCategories = useSelector((state) => state.categories.error);
     const categories = useSelector((state) => state.categories.categories);
+
+    const handleSearchStr = (search) => {
+        setSearchStr(search);
+    };
 
     return (
         <main>
@@ -41,8 +46,12 @@ export const MainPage = () => {
                     <React.Fragment>
                         <Aside categories={categories} />
                         <div className='main-page__books'>
-                            <BooksMenu viewBooks={viewBooks} setViewBooks={setViewBooks} />
-                            {viewBooks ? <BooksSquare books={books} /> : <BooksList books={books} />}
+                            <BooksMenu viewBooks={viewBooks} setViewBooks={setViewBooks} onChange={handleSearchStr} />
+                            {viewBooks ? (
+                                <BooksSquare books={books} searchStr={searchStr} />
+                            ) : (
+                                <BooksList books={books} searchStr={searchStr} />
+                            )}
                         </div>
                     </React.Fragment>
                 )}
