@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import './aside.css';
 
-export const Aside = ({ categories }) => {
+export const Aside = ({ categories, listCategory, onClick }) => {
     const [isHide, setIsHide] = useState(true);
     const [ref, isShow] = useOutletContext();
     const burgerWigth = window.innerWidth > 768;
@@ -17,6 +17,11 @@ export const Aside = ({ categories }) => {
             setIsHide(true);
         }
     }, [location.pathname]);
+
+    const setCategory = ({ category }) => {
+        onClick(category);
+        console.log(category);
+    };
 
     return (
         <aside data-test-id='burger-navigation' ref={ref} className={classNames('aside', { hide: !isShow })}>
@@ -31,16 +36,20 @@ export const Aside = ({ categories }) => {
                 </NavLink>
             </h5>
             <div className={classNames('aside-wrapper', { hide: !isHide })}>
-                <NavLink data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'} to='/books/allbooks'>
+                <NavLink data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'} to='/books/all'>
                     Все книги
                 </NavLink>
                 {categories === null
                     ? ''
                     : categories.map((category) => (
                           <div key={category.id}>
-                              <NavLink to={`/books/${category.path}`}>
+                              <NavLink to={`/books/${category.path}`} onClick={setCategory}>
                                   {category.name}
-                                  <span>15</span>
+                                  {listCategory[category.name] ? (
+                                      <span>{listCategory[category.name]}</span>
+                                  ) : (
+                                      <span>0</span>
+                                  )}
                               </NavLink>
                           </div>
                       ))}

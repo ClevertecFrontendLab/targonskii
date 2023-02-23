@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.books__menu button {
+/* .books__menu button {
     position: relative;
     display: block;
     width: 38px;
@@ -16,13 +16,14 @@
     background: var(--white);
     box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
         0px 1px 5px rgba(191, 196, 201, 0.24);
-}
+} */
 
 .books__menu > button:first-child {
     display: none;
 }
 
-.books__menu > button:nth-child(3) {
+.books__search-rating {
+    position: relative;
     margin-left: 17px;
     padding-left: 39px;
     border: none;
@@ -41,9 +42,17 @@
     cursor: pointer;
 }
 
-.books__menu > button:nth-child(3)::before {
+.books__search-rating::before {
     position: absolute;
     content: url('../../assets/images/sort-down.svg');
+    top: 11px;
+    left: 13px;
+    cursor: pointer;
+}
+
+.books__search-rating.rating::before {
+    position: absolute;
+    content: url('../../assets/images/sort-up.svg');
     top: 11px;
     left: 13px;
     cursor: pointer;
@@ -54,6 +63,7 @@
 }
 
 .books__search-input {
+    position: relative;
     display: block;
     padding-left: 40px;
     border: none;
@@ -65,6 +75,10 @@
     border-radius: 19px;
     cursor: pointer;
     caret-color: var(--red);
+}
+
+.books__search-match {
+    color: var(--match-red);
 }
 
 .books__search-input:focus {
@@ -92,7 +106,7 @@
     position: relative;
 }
 
-.books__search-div::after {
+.books__search-input::after {
     position: absolute;
     content: url('../../assets/images/search.svg');
     top: 11px;
@@ -100,7 +114,7 @@
     z-index: 1;
 }
 
-.books__search-div::after:focus {
+.books__search-input::after:focus {
     position: absolute;
     content: url('../../assets/images/search-orange.svg');
     top: 11px;
@@ -159,7 +173,7 @@
     position: absolute;
     content: url('../../assets/images/list-grey.svg');
     top: 9px;
-    left: 10px;
+    left: 64px;
 }
 
 .books__view-list-active {
@@ -199,7 +213,7 @@
     position: absolute;
     content: url('../../assets/images/list-white.svg');
     top: 9px;
-    left: 10px;
+    left: 63px;
 }
 
 .books__search-input button {

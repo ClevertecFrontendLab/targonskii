@@ -10,6 +10,7 @@ export const App = () => (
     <Routes>
         <Route path='/' element={<Layout />} >
             <Route index={true} element={<MainPage />} />
+            <Route path='/books/:genre' element={<MainPage />} />
             <Route path='/books/:genre/:id' element={<BookPage />} />
             <Route path='/rules' element={<Rules />} />
             <Route path='/terms' element={<Terms />} />

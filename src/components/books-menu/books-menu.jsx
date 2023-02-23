@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import './books-menu.css';
 
-export const BooksMenu = ({ viewBooks, setViewBooks, onChange }) => {
+export const BooksMenu = ({ viewBooks, setViewBooks, onChange, onClick, rating }) => {
     const [focusInput, setFocusInput] = useState(false);
     const focusInputRef = useRef(null);
 
@@ -16,6 +16,10 @@ export const BooksMenu = ({ viewBooks, setViewBooks, onChange }) => {
 
     const filterBooks = (event) => {
         onChange(event.target.value);
+    };
+
+    const setRating = (prev) => {
+        onClick(!prev);
     };
 
     useEffect(() => {
@@ -47,20 +51,19 @@ export const BooksMenu = ({ viewBooks, setViewBooks, onChange }) => {
                 aria-label='books__search-button'
                 type='button'
             />
-            <div className='books__search-div'>
-                <input
-                    data-test-id='input-search'
-                    aria-label='books__search'
-                    type='text'
-                    placeholder='Поиск книги или автора…'
-                    className={classNames('books__search-input', { focus: focusInput })}
-                    onChange={filterBooks}
-                />
-            </div>
+            <input
+                data-test-id='input-search'
+                aria-label='books__search'
+                type='text'
+                placeholder='Поиск книги или автора…'
+                className={classNames('books__search-input', { focus: focusInput })}
+                onChange={filterBooks}
+            />
             <button
-                className={classNames('books__search-rating', { focus: focusInput })}
+                className={classNames('books__search-rating', { rating })}
                 aria-label='books__search-rating'
                 type='button'
+                onClick={setRating}
             >
                 <span>По рейтингу</span>
             </button>

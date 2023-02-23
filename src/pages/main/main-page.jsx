@@ -16,6 +16,8 @@ export const MainPage = () => {
     const dispatch = useDispatch();
     const [viewBooks, setViewBooks] = useState(true);
     const [searchStr, setSearchStr] = useState('');
+    const [rating, setRating] = useState(false);
+    const [chosenCategory, setChosenCategory] = useState({});
 
     useEffect(() => {
         dispatch(fetchBooks());
@@ -28,8 +30,27 @@ export const MainPage = () => {
     const errorCategories = useSelector((state) => state.categories.error);
     const categories = useSelector((state) => state.categories.categories);
 
+    const listCategory = books.reduce((acc, elem) => {
+        if (elem.categories.length === 1) {
+            acc[elem.categories] = (acc[elem.categories] || 0) + 1;
+        } else {
+            acc[elem.categories[0]] = (acc[elem.categories[0]] || 0) + 1;
+            acc[elem.categories[1]] = (acc[elem.categories[1]] || 0) + 1;
+        }
+
+        return acc;
+    }, {});
+
     const handleSearchStr = (search) => {
         setSearchStr(search);
+    };
+
+    const handleSetRating = () => {
+        setRating(!rating);
+    };
+
+    const handleSetCategory = (category) => {
+        setChosenCategory(category);
     };
 
     return (
@@ -44,13 +65,24 @@ export const MainPage = () => {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <Aside categories={categories} />
+                        <Aside categories={categories} listCategory={listCategory} onClick={handleSetCategory} />
                         <div className='main-page__books'>
-                            <BooksMenu viewBooks={viewBooks} setViewBooks={setViewBooks} onChange={handleSearchStr} />
+                            <BooksMenu
+                                viewBooks={viewBooks}
+                                setViewBooks={setViewBooks}
+                                onChange={handleSearchStr}
+                                onClick={handleSetRating}
+                                rating={rating}
+                            />
                             {viewBooks ? (
-                                <BooksSquare books={books} searchStr={searchStr} />
+                                <BooksSquare
+                                    books={books}
+                                    searchStr={searchStr}
+                                    rating={rating}
+                                    chosenCategory={chosenCategory}
+                                />
                             ) : (
-                                <BooksList books={books} searchStr={searchStr} />
+                                <BooksList books={books} searchStr={searchStr} rating={rating} />
                             )}
                         </div>
                     </React.Fragment>
