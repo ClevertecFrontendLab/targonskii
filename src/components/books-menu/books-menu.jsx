@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
+import Search from '../../assets/images/search.svg';
+
 import './books-menu.css';
 
 export const BooksMenu = ({ viewBooks, setViewBooks, onChange, onClick, rating }) => {
@@ -51,19 +53,23 @@ export const BooksMenu = ({ viewBooks, setViewBooks, onChange, onClick, rating }
                 aria-label='books__search-button'
                 type='button'
             />
-            <input
-                data-test-id='input-search'
-                aria-label='books__search'
-                type='text'
-                placeholder='Поиск книги или автора…'
-                className={classNames('books__search-input', { focus: focusInput })}
-                onChange={filterBooks}
-            />
+            <div className={classNames('books__input-search', { focus: focusInput })}>
+                <input
+                    data-test-id='input-search'
+                    aria-label='books__search'
+                    type='text'
+                    placeholder='Поиск книги или автора…'
+                    className={classNames('books__search-input', { focus: focusInput })}
+                    onChange={filterBooks}
+                />
+                <img src={Search} alt='input-search' />
+            </div>
             <button
                 className={classNames('books__search-rating', { rating })}
                 aria-label='books__search-rating'
                 type='button'
                 onClick={setRating}
+                data-test-id='sort-rating-button'
             >
                 <span>По рейтингу</span>
             </button>

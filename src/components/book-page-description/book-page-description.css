@@ -38,15 +38,16 @@
     margin: 0 32px 0 165px;
 }
 
-.book-page__path span:first-child {
+.book-page__path-link {
     position: relative;
+    margin-right: 20px;
 }
 
-.book-page__path span:first-child:before {
+.book-page__path-link:before {
     position: absolute;
     content: url('../../assets/images/path-slash.svg');
-    top: 0px;
-    left: 113px;
+    top: 0;
+    right: 0;
 }
 
 .book-page__about-book {
