@@ -1,38 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { useCountBooksInCategory } from '../../hooks/useCountBooksInCategory';
+
 import './aside.css';
-
-const countBooksInCategory = (books) =>
-    books.reduce((result, { categories }) => {
-        if (!categories.length) return result;
-
-        categories.forEach((category) => {
-            if (category in result) result[category] += 1;
-            else result[category] = 1;
-        });
-
-        return result;
-    }, {});
 
 export const Aside = ({ categories }) => {
     const [isHide, setIsHide] = useState(true);
     const [ref, isShow] = useOutletContext();
     const burgerWigth = window.innerWidth > 768;
-    const location = useLocation();
+    const { pathname } = useLocation();
 
-    const books = useSelector((state) => state.bookList.booksList);
-    const valueBooksInCategory = countBooksInCategory(books);
+    const valueBooksInCategory = useCountBooksInCategory();
 
     useEffect(() => {
-        if (location.pathname === '/rules' || location.pathname === '/terms') {
-            setIsHide(false);
-        } else {
-            setIsHide(true);
-        }
-    }, [location.pathname]);
+        setIsHide(!['/rules', '/terms'].includes(pathname));
+    }, [pathname]);
 
     return (
         <aside data-test-id='burger-navigation' ref={ref} className={classNames('aside', { hide: !isShow })}>
@@ -54,16 +38,18 @@ export const Aside = ({ categories }) => {
                         : categories.map((category) => (
                               <div key={category.id}>
                                   <NavLink
-                                      data-test-id={burgerWigth ? `navigation-${category}` : `burger-${category}`}
+                                      data-test-id={
+                                          burgerWigth ? `navigation-${category.name}` : `burger-${category.name}`
+                                      }
                                       to={`/books/${category.path}`}
                                   >
                                       {category.name}
                                       {valueBooksInCategory[category.name] ? (
-                                          <span data-test-id={`navigation-book-count-for-${category}`}>
+                                          <span data-test-id={`navigation-book-count-for-${category.name}`}>
                                               {valueBooksInCategory[category.name]}
                                           </span>
                                       ) : (
-                                          <span data-test-id={`navigation-book-count-for-${category}`}>0</span>
+                                          <span data-test-id={`navigation-book-count-for-${category.name}`}>0</span>
                                       )}
                                   </NavLink>
                               </div>

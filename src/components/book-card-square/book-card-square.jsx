@@ -6,7 +6,9 @@ import './book-card-square.css';
 
 export const BookCardSquare = ({ book, searchStr }) => (
     <div className='book-card-square'>
-        <img src={book.image === null ? unknownBookImageSmall : hostUrl + book.image.url} alt='book-img' />
+        <div className='book-card-square__div-img'>
+            <img src={book.image === null ? unknownBookImageSmall : hostUrl + book.image.url} alt='book-img' />
+        </div>
         {book.rating ? (
             <div className='book-card-square__evaluation' />
         ) : (
@@ -14,8 +16,7 @@ export const BookCardSquare = ({ book, searchStr }) => (
                 <p>еще нет оценок</p>
             </div>
         )}
-        <p>{book.title.slice(0, 30)}...</p>
-        {/* <BookTitle searchStr={searchStr} book={book} /> */}
+        <BookTitle searchStr={searchStr} book={book} />
         <p>
             {book.authors}, {book.issueYear}
         </p>

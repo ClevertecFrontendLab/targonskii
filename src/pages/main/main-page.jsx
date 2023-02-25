@@ -18,20 +18,7 @@ export const MainPage = () => {
         dispatch(fetchCategories());
     }, [dispatch]);
 
-    // const countBooksInCategory = (books) =>
-    //     books.reduce((result, { categories }) => {
-    //         if (!categories.length) return result;
-
-    //         categories.forEach((category) => {
-    //             if (category in result) result[category] += 1;
-    //             else result[category] = 1;
-    //         });
-
-    //         return result;
-    //     }, {});
-
     const { status, error } = useSelector((state) => state.bookList);
-    // const books = useSelector((state) => state.bookList.booksList);
     const statusCategories = useSelector((state) => state.categories.status);
     const errorCategories = useSelector((state) => state.categories.error);
     const categories = useSelector((state) => state.categories.categories);

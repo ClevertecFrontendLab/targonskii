@@ -11,7 +11,7 @@ export const BooksSquare = ({ filteredBooks, searchStr }) => {
     return (
         <div className='books-square'>
             {filteredBooks.map((book) => (
-                <Link data-test-id='card' key={book.id} to={`/books/${categories[book.categories]}/${book.id}`}>
+                <Link data-test-id='card' key={book.id} to={`/books/${categories[book.categories[0]]}/${book.id}`}>
                     <BookCardSquare book={book} key={book.id} searchStr={searchStr} />
                 </Link>
             ))}
