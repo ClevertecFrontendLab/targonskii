@@ -155,18 +155,6 @@ aside h5:not(:first-child) {
     -webkit-text-fill-color: transparent;
 }
 
-/* .aside-wrapper > a:first-child {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 28px;
-    letter-spacing: 0.1px;
-    background: linear-gradient(var(--btn-hover));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: left;
-} */
-
 aside span {
     margin-left: 6px;
     font-weight: 400;

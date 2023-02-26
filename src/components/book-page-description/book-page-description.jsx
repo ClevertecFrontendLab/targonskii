@@ -17,7 +17,7 @@ export const BookPageDescription = ({ bookCard }) => {
             <div className='book-page__path'>
                 <div className='book-page__path-link'>
                     <Link data-test-id='breadcrumbs-link' to={`/books/${genre}`}>
-                        <span>{bookCard.categories} книги</span>
+                        <span>{genre === 'all' ? 'Все книги' : bookCard.categories}</span>
                     </Link>
                 </div>
                 <span data-test-id='book-name'>{bookCard.title}</span>

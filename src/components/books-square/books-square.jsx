@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { useCategoryByPath } from '../../hooks/useCategoryByPath.js';
 import { BookCardSquare } from '../book-card-square/book-card-square.jsx';
 
 import './books-square.css';
 
 export const BooksSquare = ({ filteredBooks, searchStr }) => {
-    const categories = useCategoryByPath();
+    const { genre } = useParams();
 
     return (
         <div className='books-square'>
             {filteredBooks.map((book) => (
-                <Link data-test-id='card' key={book.id} to={`/books/${categories[book.categories[0]]}/${book.id}`}>
+                <Link data-test-id='card' key={book.id} to={`/books/${genre}/${book.id}`}>
                     <BookCardSquare book={book} key={book.id} searchStr={searchStr} />
                 </Link>
             ))}

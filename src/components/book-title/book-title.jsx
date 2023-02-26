@@ -8,7 +8,7 @@ export const BookTitle = ({ searchStr, book }) => {
         );
 
     return searchStr ? (
-        <p data-test-id='highlight-matches' dangerouslySetInnerHTML={{ __html: paintStr(book.title, searchStr) }} />
+        <p dangerouslySetInnerHTML={{ __html: paintStr(book.title, searchStr) }} />
     ) : (
         <p className='book-title'>{book.title}</p>
     );

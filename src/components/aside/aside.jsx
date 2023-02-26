@@ -8,7 +8,7 @@ import './aside.css';
 
 export const Aside = ({ categories }) => {
     const [isHide, setIsHide] = useState(true);
-    const [ref, isShow] = useOutletContext();
+    const [ref, isShow, setIsShow] = useOutletContext();
     const burgerWigth = window.innerWidth > 768;
     const { pathname } = useLocation();
 
@@ -30,7 +30,11 @@ export const Aside = ({ categories }) => {
                     Витрина книг
                 </NavLink>
                 <div className={classNames('aside-wrapper', { hide: !isHide })}>
-                    <NavLink data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'} to='/books/all'>
+                    <NavLink
+                        data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'}
+                        to='/books/all'
+                        onClick={() => setIsShow(!isShow)}
+                    >
                         Все книги
                     </NavLink>
                     {categories === null
@@ -39,17 +43,18 @@ export const Aside = ({ categories }) => {
                               <div key={category.id}>
                                   <NavLink
                                       data-test-id={
-                                          burgerWigth ? `navigation-${category.name}` : `burger-${category.name}`
+                                          burgerWigth ? `navigation-${category.path}` : `burger-${category.path}`
                                       }
                                       to={`/books/${category.path}`}
+                                      onClick={() => setIsShow(!isShow)}
                                   >
                                       {category.name}
                                       {valueBooksInCategory[category.name] ? (
-                                          <span data-test-id={`navigation-book-count-for-${category.name}`}>
+                                          <span data-test-id={`navigation-book-count-for-${category.path}`}>
                                               {valueBooksInCategory[category.name]}
                                           </span>
                                       ) : (
-                                          <span data-test-id={`navigation-book-count-for-${category.name}`}>0</span>
+                                          <span data-test-id={`navigation-book-count-for-${category.path}`}>0</span>
                                       )}
                                   </NavLink>
                               </div>
