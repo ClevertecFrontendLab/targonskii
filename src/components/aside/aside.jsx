@@ -2,49 +2,75 @@ import { useEffect, useState } from 'react';
 import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { useCountBooksInCategory } from '../../hooks/useCountBooksInCategory';
+
 import './aside.css';
 
 export const Aside = ({ categories }) => {
     const [isHide, setIsHide] = useState(true);
-    const [ref, isShow] = useOutletContext();
+    const [ref, isShow, setIsShow] = useOutletContext();
     const burgerWigth = window.innerWidth > 768;
-    const location = useLocation();
+    const { pathname } = useLocation();
+
+    const valueBooksInCategory = useCountBooksInCategory();
 
     useEffect(() => {
-        if (location.pathname === '/rules' || location.pathname === '/terms') {
-            setIsHide(false);
-        } else {
-            setIsHide(true);
-        }
-    }, [location.pathname]);
+        setIsHide(!['/rules', '/terms'].includes(pathname));
+    }, [pathname]);
 
     return (
         <aside data-test-id='burger-navigation' ref={ref} className={classNames('aside', { hide: !isShow })}>
             <h5>
                 <NavLink
                     data-test-id={burgerWigth ? 'navigation-showcase' : 'burger-showcase'}
-                    to='/'
+                    to='/books/all'
                     className={classNames('aside__button', { hide: !isHide })}
                     onClick={() => setIsHide(!isHide)}
                 >
                     Витрина книг
                 </NavLink>
+                <div className={classNames('aside-wrapper', { hide: !isHide })}>
+                    <NavLink
+                        data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'}
+                        to='/books/all'
+                        onClick={() => setIsShow(!isShow)}
+                    >
+                        Все книги
+                    </NavLink>
+                    {categories === null
+                        ? ''
+                        : categories.map((category) => (
+                              <div key={category.id}>
+                                  <NavLink
+                                      data-test-id={
+                                          burgerWigth ? `navigation-${category.path}` : `burger-${category.path}`
+                                      }
+                                      to={`/books/${category.path}`}
+                                      onClick={() => setIsShow(!isShow)}
+                                  >
+                                      {category.name}
+                                  </NavLink>
+                                  {valueBooksInCategory[category.name] ? (
+                                      <span
+                                          data-test-id={`${burgerWigth ? 'navigation' : 'burger'}-book-count-for-${
+                                              category.path
+                                          }`}
+                                      >
+                                          {valueBooksInCategory[category.name]}
+                                      </span>
+                                  ) : (
+                                      <span
+                                          data-test-id={`${burgerWigth ? 'navigation' : 'burger'}-book-count-for-${
+                                              category.path
+                                          }`}
+                                      >
+                                          0
+                                      </span>
+                                  )}
+                              </div>
+                          ))}
+                </div>
             </h5>
-            <div className={classNames('aside-wrapper', { hide: !isHide })}>
-                <NavLink data-test-id={burgerWigth ? 'navigation-books' : 'burger-books'} to='/books/allbooks'>
-                    Все книги
-                </NavLink>
-                {categories === null
-                    ? ''
-                    : categories.map((category) => (
-                          <div key={category.id}>
-                              <NavLink to={`/books/${category.path}`}>
-                                  {category.name}
-                                  <span>15</span>
-                              </NavLink>
-                          </div>
-                      ))}
-            </div>
             <h5>
                 <NavLink data-test-id={burgerWigth ? 'navigation-terms' : 'burger-terms'} to='/rules'>
                     Правила пользования

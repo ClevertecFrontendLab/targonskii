@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import unknownBookImage from '../../assets/images/unknown-book-image.svg';
@@ -9,12 +10,17 @@ import './book-page-description.css';
 
 export const BookPageDescription = ({ bookCard }) => {
     const [isHide, setIsHide] = useState(true);
+    const { genre } = useParams();
 
     return (
         <div className='book-page'>
             <div className='book-page__path'>
-                <span>{bookCard.categories} книги</span>
-                <span>{bookCard.title}</span>
+                <div className='book-page__path-link'>
+                    <Link data-test-id='breadcrumbs-link' to={`/books/${genre}`}>
+                        <span>{genre === 'all' ? 'Все книги' : bookCard.categories}</span>
+                    </Link>
+                </div>
+                <span data-test-id='book-name'>{bookCard.title}</span>
             </div>
             <div className='book-page__wrapper'>
                 <div className='book-page__book'>
@@ -26,7 +32,7 @@ export const BookPageDescription = ({ bookCard }) => {
                         )}
                     </div>
                     <div className='book-page__about-book'>
-                        <p>{bookCard.title}</p>
+                        <p data-test-id='book-title'>{bookCard.title}</p>
                         <p>
                             {bookCard.authors}, {bookCard.issueYear}
                         </p>

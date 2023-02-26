@@ -13,7 +13,7 @@ export const Layout = () => {
     return (
         <React.Fragment>
             <Header isShow={isShow} setIsShow={setIsShow} />
-            <Outlet context={[ref, isShow]} />
+            <Outlet context={[ref, isShow, setIsShow]} />
             <Footer />
         </React.Fragment>
     );
