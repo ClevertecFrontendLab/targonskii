@@ -49,14 +49,24 @@ export const Aside = ({ categories }) => {
                                       onClick={() => setIsShow(!isShow)}
                                   >
                                       {category.name}
-                                      {valueBooksInCategory[category.name] ? (
-                                          <span data-test-id={`navigation-book-count-for-${category.path}`}>
-                                              {valueBooksInCategory[category.name]}
-                                          </span>
-                                      ) : (
-                                          <span data-test-id={`navigation-book-count-for-${category.path}`}>0</span>
-                                      )}
                                   </NavLink>
+                                  {valueBooksInCategory[category.name] ? (
+                                      <span
+                                          data-test-id={`${burgerWigth ? 'navigation' : 'burger'}-book-count-for-${
+                                              category.path
+                                          }`}
+                                      >
+                                          {valueBooksInCategory[category.name]}
+                                      </span>
+                                  ) : (
+                                      <span
+                                          data-test-id={`${burgerWigth ? 'navigation' : 'burger'}-book-count-for-${
+                                              category.path
+                                          }`}
+                                      >
+                                          0
+                                      </span>
+                                  )}
                               </div>
                           ))}
                 </div>

@@ -39,7 +39,7 @@ export const BlockBooks = () => {
                 <BooksGrid viewBooks={viewBooks} rating={rating} searchStr={searchStr} />
             ) : (
                 <div className='books__error'>
-                    <span data-test-id='empty-category'>В этой категории книг еще нет</span>
+                    <span data-test-id='empty-category'>В этой категории книг ещё нет</span>
                 </div>
             )}
         </React.Fragment>
