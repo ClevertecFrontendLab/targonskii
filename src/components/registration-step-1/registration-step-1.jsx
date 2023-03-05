@@ -38,7 +38,7 @@ export const RegistrationStep1 = ({ onClick }) => {
             <h5>1 шаг из 3</h5>
             <div className='registration__input'>
                 <input
-                    {...register('login', {
+                    {...register('username', {
                         required: 'Поле не может быть пустым',
                         pattern: /^[A-Za-z0-9]+$/,
                     })}

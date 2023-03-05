@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import { RegistrationStep1 } from '../../components/registration-step-1/registration-step-1';
 import { RegistrationStep2 } from '../../components/registration-step-2/registration-step-2';
@@ -23,7 +24,9 @@ export const Registration = () => {
                 ...data,
             })
             .then((response) => {
+                Cookies.set('token', response.data.jwt);
                 console.log(response);
+                console.log(Cookies.get('token'));
             })
             .catch((error) => {
                 console.log(error);

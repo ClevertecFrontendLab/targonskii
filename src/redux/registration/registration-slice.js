@@ -4,7 +4,7 @@ const registrationSlice = createSlice({
     name: 'registration',
     initialState: {
         'registration': {
-            'login': null,
+            'username': null,
             'password': null,
             'firstName': null,
             'lastName': null,

@@ -1,7 +1,9 @@
 import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export const ProtectedRoute = ({ children }) => {
-    const user = false; // Временное решение, пока не буду получать пользователя.
+    // const user = Cookies.get('token');
+    const user = true;
 
     if (!user) {
         return <Navigate to='/auth' />;

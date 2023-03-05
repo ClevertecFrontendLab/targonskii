@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 
 import arrow from '../../assets/images/arrow-reg.svg';
+import { apiLogin } from '../../constants/urls';
 
 import './auth.css';
 
 export const Auth = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [type, setType] = useState('password');
 
@@ -20,7 +24,19 @@ export const Auth = () => {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+        axios
+            .post(apiLogin, {
+                ...data,
+            })
+            .then((response) => {
+                Cookies.set('token', response.data.jwt);
+                navigate('/');
+                console.log(response);
+                console.log(Cookies.get('token'));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     const handleShowPassword = () => {
@@ -35,7 +51,7 @@ export const Auth = () => {
                 <div className='auth__div-input'>
                     <input
                         className={errors?.login ? 'auth__input-error' : 'auth__input'}
-                        {...register('login', {
+                        {...register('identifier', {
                             required: 'Неверный логин или пароль!',
                         })}
                     />
