@@ -1,13 +1,12 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-export const ProtectedRoute = ({ children }) => {
-    // const user = Cookies.get('token');
-    const user = true;
+export const ProtectedRoute = () => {
+    const user = Cookies.get('token');
 
     if (!user) {
         return <Navigate to='/auth' />;
     }
 
-    return children;
+    return <Outlet />;
 };
