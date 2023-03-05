@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import arrow from '../../assets/images/arrow-reg.svg';
+import { setRegistration } from '../../redux/registration/registration-slice';
 
-export const RegistrationStep1 = ({ onClick, setStep }) => {
+import '../../assets/styles/auth-layout.css';
+
+export const RegistrationStep1 = ({ onClick }) => {
+    const dispatch = useDispatch();
+
     const [showPassword, setShowPassword] = useState(false);
     const [type, setType] = useState('password');
     // const [step, setStep] = useState('step1');
@@ -18,15 +24,17 @@ export const RegistrationStep1 = ({ onClick, setStep }) => {
         mode: 'onBlur',
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
-
     const handleStep = () => onClick();
 
+    const onSubmit = (data) => {
+        console.log(data);
+        handleStep();
+        dispatch(setRegistration(data));
+    };
+
     return (
-        <form className='registration__form' action='' onSubmit={handleSubmit(onSubmit)}>
-            <h4>Регистрация</h4>
+        <form className='auth-layout__form' action='' onSubmit={handleSubmit(onSubmit)}>
+            <h4 className='registration__title'>Регистрация</h4>
             <h5>1 шаг из 3</h5>
             <div className='registration__input'>
                 <input
@@ -53,7 +61,7 @@ export const RegistrationStep1 = ({ onClick, setStep }) => {
                 <span className='registration__placeholder'>Пароль</span>
                 <span className='registration__hint'>Пароль не менее 8 символов, с заглавной буквой и цифрой</span>
             </div>
-            <button type='submit' disabled={!isValid} onClick={handleStep}>
+            <button type='submit' disabled={!isValid}>
                 СЛЕДУЮЩИЙ ШАГ
             </button>
             <div className='registration__registration'>

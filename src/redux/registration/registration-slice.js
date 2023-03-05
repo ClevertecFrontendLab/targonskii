@@ -4,30 +4,20 @@ const registrationSlice = createSlice({
     name: 'registration',
     initialState: {
         'registration': {
-            'username': null,
+            'login': null,
             'password': null,
             'firstName': null,
             'lastName': null,
+            'phone': null,
             'email': null,
-            'phone': null
         }
     },
     reducers: {
         setRegistration(state, action) {
-            state.user.username = action.payload.user.username;
-            state.user.password = action.payload.user.password;
-            state.user.firstName = action.payload.user.firstName;
-            state.user.lastName = action.payload.user.lastName; 
-            state.user.email = action.payload.user.email;
-            state.user.phone = action.payload.user.phone;
+            state.registration = { ...state.registration, ...action.payload }
         },
         removeRegistration(state) {
-            state.user.username = null;
-            state.user.password = null;
-            state.user.firstName = null;
-            state.user.lastName = null; 
-            state.user.email = null;
-            state.user.phone = null;
+            state.registration = null;
         }
     }
 });

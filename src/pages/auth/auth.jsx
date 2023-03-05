@@ -23,21 +23,15 @@ export const Auth = () => {
         console.log(data);
     };
 
-    const handleShowPassword = (event) => {
-        event.preventDefault();
-        if (type === 'password') {
-            setType('text');
-            setShowPassword(!showPassword);
-        }
-        setType('password');
+    const handleShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     return (
-        <div className='auth'>
+        <div className='auth-layout'>
             <h3>Cleverland</h3>
-            <form className='auth__form' action='' onSubmit={handleSubmit(onSubmit)}>
-                <h4>Вход в личный кабинет</h4>
+            <form className='auth-layout__form' action='' onSubmit={handleSubmit(onSubmit)}>
+                <h4 className='auth-layout__title'>Вход в личный кабинет</h4>
                 <div className='auth__div-input'>
                     <input
                         className={errors?.login ? 'auth__input-error' : 'auth__input'}
@@ -50,7 +44,7 @@ export const Auth = () => {
                 <div className='auth__div-input auth__input-password'>
                     <input
                         className={errors?.password ? 'auth__input-error' : 'auth__input'}
-                        type={type}
+                        type={showPassword ? 'text' : 'password'}
                         {...register('password', {
                             required: 'Неверный логин или пароль!',
                         })}

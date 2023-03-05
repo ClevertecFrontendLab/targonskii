@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ children }) => {
     const user = false; // Временное решение, пока не буду получать пользователя.
@@ -7,5 +7,5 @@ export const ProtectedRoute = ({ children }) => {
         return <Navigate to='/auth' />;
     }
 
-    return children ? children : <Outlet />;
+    return children;
 };
