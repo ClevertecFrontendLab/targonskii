@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
@@ -10,8 +8,6 @@ import arrow from '../../assets/images/arrow-reg.svg';
 import '../../assets/styles/auth-layout.css';
 
 export const RegistrationStep3 = ({ onSubmitForm }) => {
-    const dispatch = useDispatch();
-
     const {
         register,
         formState: { errors, isValid },
@@ -31,7 +27,27 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
             <div className='registration__input'>
                 <input
                     type='tel'
-                    // mask={['+375', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]}
+                    mask={[
+                        '+',
+                        '3',
+                        '7',
+                        '5',
+                        ' ',
+                        '(',
+                        /\d/,
+                        /\d/,
+                        ')',
+                        ' ',
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        '-',
+                        /\d/,
+                        /\d/,
+                        '-',
+                        /\d/,
+                        /\d/,
+                    ]}
                     {...register('phone', {
                         required: 'В формате +375 (xx) xxx-xx-xx',
                     })}
@@ -43,12 +59,12 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
                     type='email'
                     {...register('email', {
                         required: 'Введите корректный e-mail',
-                        pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                        pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
                     })}
                 />
                 <span className='registration__placeholder'>E-mail</span>
             </div>
-            <button type='submit' disabled={!isValid}>
+            <button className='registration__button' type='submit' disabled={!isValid}>
                 ЗАРЕГИСТРИРОВАТЬСЯ
             </button>
             <div className='registration__registration'>

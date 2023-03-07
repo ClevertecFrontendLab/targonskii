@@ -10,11 +10,11 @@ export const fetchBooks = createAsyncThunk(
         try {
             const response = await axios.get(apiBooksListUrl);
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Server Error');
             }
 
-            return response;
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.message)
         }

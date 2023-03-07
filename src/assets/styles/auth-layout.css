@@ -1,4 +1,5 @@
 .auth-layout {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,17 +10,20 @@
 }
 
 .auth-layout h3 {
+    position: absolute;
+    top: 180px;
+    left: auto;
+    right: auto;
     font-weight: 700;
     font-size: 32px;
     line-height: 40px;
     letter-spacing: 0.1px;
     color: var(--white);
-    margin: 0 0 20px;
 }
 
 .auth-layout__form {
     width: 528px;
-    height: 466px;
+    max-height: 100%;
     border-radius: 16px;
     background-color: var(--white);
     padding: 48px 56px;

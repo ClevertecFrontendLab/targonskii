@@ -45,7 +45,7 @@ export const RegistrationStep2 = ({ onClick }) => {
                 />
                 <span className='registration__placeholder'>Фамилия</span>
             </div>
-            <button type='submit' disabled={!isValid}>
+            <button className='registration__button' type='submit' disabled={!isValid}>
                 ПОСЛЕДНИЙ ШАГ
             </button>
             <div className='registration__registration'>

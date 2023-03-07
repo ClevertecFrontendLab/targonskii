@@ -3,6 +3,10 @@ main {
     flex: 1;
 }
 
+.main-page__books {
+    width: 100%;
+}
+
 .main-page {
     width: 100%;
     display: flex;

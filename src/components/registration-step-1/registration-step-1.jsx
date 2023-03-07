@@ -13,8 +13,7 @@ export const RegistrationStep1 = ({ onClick }) => {
     const dispatch = useDispatch();
 
     const [showPassword, setShowPassword] = useState(false);
-    const [type, setType] = useState('password');
-    // const [step, setStep] = useState('step1');
+    // const [type, setType] = useState('password');
 
     const {
         register,
@@ -32,6 +31,8 @@ export const RegistrationStep1 = ({ onClick }) => {
         dispatch(setRegistration(data));
     };
 
+    const handleShowPassword = () => setShowPassword(!showPassword);
+
     return (
         <form className='auth-layout__form' action='' onSubmit={handleSubmit(onSubmit)}>
             <h4 className='registration__title'>Регистрация</h4>
@@ -48,7 +49,8 @@ export const RegistrationStep1 = ({ onClick }) => {
             </div>
             <div className='registration__input registration__input-password'>
                 <input
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
+                    required={true}
                     {...register('password', {
                         required: 'Поле не может быть пустым',
                         minLength: {
@@ -60,8 +62,14 @@ export const RegistrationStep1 = ({ onClick }) => {
                 />
                 <span className='registration__placeholder'>Пароль</span>
                 <span className='registration__hint'>Пароль не менее 8 символов, с заглавной буквой и цифрой</span>
+                <button
+                    aria-label='auth__show-password'
+                    type='button'
+                    className={classNames('auth__button--show-password', { show: showPassword })}
+                    onClick={handleShowPassword}
+                />
             </div>
-            <button type='submit' disabled={!isValid}>
+            <button className='registration__button' type='submit' disabled={!isValid}>
                 СЛЕДУЮЩИЙ ШАГ
             </button>
             <div className='registration__registration'>

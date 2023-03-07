@@ -10,11 +10,11 @@ export const fetchCategories = createAsyncThunk(
         try {
             const response = await axios.get(apiCategoriesUrl);
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Server Error');
             }
 
-            return response;
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.message)
         }

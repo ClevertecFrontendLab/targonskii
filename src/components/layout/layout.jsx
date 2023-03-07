@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { useOutside } from '../../hooks/useOutside';
 import { Footer } from '../footer/footer';

@@ -67,6 +67,27 @@ body {
     color: var(--grey40);
 }
 
+.registration__input-password input:focus ~ .auth__button--show-password,
+.registration__input-password input:not(:invalid) ~ .auth__button--show-password {
+    display: block;
+}
+
+.auth__button--show-password {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: url('../../assets/images/eye-closed.svg') 50% 50% no-repeat;
+    cursor: pointer;
+}
+
+.auth__button--show-password.show {
+    background-image: url('../../assets/images/eye-opened.svg');
+}
+
 .auth-layout__form p {
     font-weight: 500;
     font-size: 12px;
@@ -76,7 +97,7 @@ body {
     padding-left: 13px;
 }
 
-.auth-layout__form button {
+.registration__button {
     width: 416px;
     height: 52px;
     border-radius: 30px;
@@ -92,7 +113,7 @@ body {
     cursor: pointer;
 }
 
-.auth-layout__form button:disabled {
+.registration__button:disabled {
     background: var(--grey10);
 }
 

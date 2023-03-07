@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 
 import { useCountBooksInCategory } from '../../hooks/useCountBooksInCategory';
 
@@ -17,6 +18,10 @@ export const Aside = ({ categories }) => {
     useEffect(() => {
         setIsHide(!['/rules', '/terms'].includes(pathname));
     }, [pathname]);
+
+    const logout = () => {
+        Cookies.remove('token');
+    };
 
     return (
         <aside data-test-id='burger-navigation' ref={ref} className={classNames('aside', { hide: !isShow })}>
@@ -87,7 +92,9 @@ export const Aside = ({ categories }) => {
                     <NavLink to='/profile'>Профиль</NavLink>
                 </h5>
                 <h5>
-                    <NavLink to='/exit'>Выход</NavLink>
+                    <NavLink onClick={logout} to='/auth'>
+                        Выход
+                    </NavLink>
                 </h5>
             </div>
         </aside>
