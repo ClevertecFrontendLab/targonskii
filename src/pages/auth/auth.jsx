@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import Cookies from 'js-cookie';
 
 import arrow from '../../assets/images/arrow-reg.svg';
 import { FormWarning } from '../../components/form-warning/form-warning';
-import { apiLogin } from '../../constants/urls';
+import { STATUS_AUTH } from '../../constants/responce-status';
+import { useAuthRequest } from '../../hooks/useAuthRequest';
 
 import './auth.css';
 
-const requestStatus = {
-    title: 'Вход не выполнен',
-    info: 'Что-то пошло не так. Попробуйте ещё раз',
-    buttonText: 'ПОВТОРИТЬ',
-    onClick: () => {},
-};
-
 export const Auth = () => {
-    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [showStatus, setShowStatus] = useState(false);
+    const [errorAuth, setErrorAuth] = useState(false);
+
+    const { authRequest, isLoading, errorStatus } = useAuthRequest();
+
+    const showStatus = STATUS_AUTH[errorStatus];
+
+    useEffect(() => {
+        if (errorStatus === 400) {
+            setErrorAuth(true);
+        }
+    }, [errorStatus]);
 
     const {
         register,
@@ -31,25 +32,7 @@ export const Auth = () => {
         mode: 'onBlur',
     });
 
-    const onSubmit = (data) => {
-        axios
-            .post(apiLogin, {
-                ...data,
-            })
-            .then((response) => {
-                Cookies.set('token', response.data.jwt);
-                navigate('/');
-            })
-            .catch((error) => {
-                if (error.response.status === 400) {
-                    navigate('/auth');
-
-                    return;
-                }
-                console.log(error);
-                setShowStatus(true);
-            });
-    };
+    const onSubmit = (data) => authRequest(data);
 
     const handleShowPassword = () => setShowPassword(!showPassword);
 
@@ -57,11 +40,11 @@ export const Auth = () => {
         <div className='auth-layout'>
             <h3>Cleverland</h3>
             <form action='' onSubmit={handleSubmit(onSubmit)}>
-                <div className={classNames('auth-layout__form', { 'server-error': showStatus })}>
+                <div className={classNames('auth-layout__form', { 'server-error': !!showStatus })}>
                     <h4 className='auth-layout__title'>Вход в личный кабинет</h4>
                     <div className='auth__div-input'>
                         <input
-                            className={errors?.login ? 'auth__input-error' : 'auth__input'}
+                            className={errors?.identifier || errorAuth ? 'auth__input-error' : 'auth__input'}
                             {...register('identifier', {
                                 required: 'Неверный логин или пароль!',
                             })}
@@ -70,7 +53,7 @@ export const Auth = () => {
                     </div>
                     <div className='auth__div-input auth__input-password'>
                         <input
-                            className={errors?.password ? 'auth__input-error' : 'auth__input'}
+                            className={errors?.password || errorAuth ? 'auth__input-error' : 'auth__input'}
                             type={showPassword ? 'text' : 'password'}
                             required={true}
                             {...register('password', {
@@ -110,7 +93,7 @@ export const Auth = () => {
                         </Link>
                     </div>
                 </div>
-                <FormWarning showStatus={showStatus} requestStatus={requestStatus} />
+                {showStatus && <FormWarning status={showStatus} />}
             </form>
         </div>
     );

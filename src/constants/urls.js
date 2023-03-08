@@ -5,4 +5,5 @@ export const apiBookUrl = `${apiBaseUrl}books/`;
 export const apiCategoriesUrl = `${apiBaseUrl}categories`;
 export const apiRegistration = `${apiBaseUrl}auth/local/register`;
 export const apiLogin = `${apiBaseUrl}auth/local`;
-export const apiResetPassword = `${apiBaseUrl}auth/forgot-password`;
+export const apiForgotPassword = `${apiBaseUrl}auth/forgot-password`;
+export const apiResetPassword = `${apiBaseUrl}auth/reset-password`;

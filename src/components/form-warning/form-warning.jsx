@@ -2,12 +2,12 @@ import classNames from 'classnames';
 
 import './form-warning.css';
 
-export const FormWarning = ({ requestStatus, showStatus }) => (
-    <div className={classNames('form-warning', { 'server-error': showStatus })}>
-        <h4>{requestStatus.title}</h4>
-        <p>{requestStatus.info}</p>
-        <button className='auth__button--submit' type='submit' onClick={requestStatus.onClick}>
-            {requestStatus.buttonText}
+export const FormWarning = ({ status }) => (
+    <div className={classNames('form-warning', { 'server-error': !!status })}>
+        <h4>{status.title}</h4>
+        <p>{status.info}</p>
+        <button className='auth__button--submit' type='submit'>
+            {status.buttonText}
         </button>
     </div>
 );
