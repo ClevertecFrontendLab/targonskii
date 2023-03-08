@@ -33,8 +33,9 @@ export const Auth = () => {
     });
 
     const onSubmit = (data) => authRequest(data);
-
     const handleShowPassword = () => setShowPassword(!showPassword);
+
+    console.log(errors);
 
     return (
         <div className='auth-layout'>
@@ -69,9 +70,9 @@ export const Auth = () => {
                         <span className='auth__placeholder'>Пароль</span>
                     </div>
                     <div>
-                        {errors?.login ? (
+                        {errors?.identifier ? (
                             <React.Fragment>
-                                <p className='auth__error'>{errors?.login.message || errors?.password.message}</p>
+                                <p className='auth__error'>{errors?.identifier.message || errors?.password.message}</p>
                                 <Link to='/forgot-pass'>
                                     <p className='auth__forgot-password'>Восстановить?</p>
                                 </Link>
