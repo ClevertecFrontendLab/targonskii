@@ -10,7 +10,7 @@ export const STATUS_RESET_PASSWORD = {
         buttonText: 'ПОВТОРИТЬ',
     },
     default: {
-        title: 'ОШИБКА',
+        title: 'Данные не сохранились',
         info: 'Что-то пошло не так. Попробуйте ещё раз',
         buttonText: 'ПОВТОРИТЬ',
     }

@@ -33,9 +33,9 @@ export const Auth = () => {
     return isLoading ? (
         <Loading />
     ) : (
-        <div className='auth-layout'>
+        <div data-test-id='auth' className='auth-layout'>
             <h3>Cleverland</h3>
-            <form action='' onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='auth-form' action='' onSubmit={handleSubmit(onSubmit)}>
                 {isShowModal ? (
                     <FormWarning status={STATUS_AUTH.default} />
                 ) : (
@@ -43,6 +43,7 @@ export const Auth = () => {
                         <h4 className='auth-layout__title'>Вход в личный кабинет</h4>
                         <div className='auth__div-input'>
                             <input
+                                name='identifier'
                                 required={true}
                                 className={errors?.identifier || isAuthError ? 'auth__input-error' : 'auth__input'}
                                 {...register('identifier', {
@@ -50,9 +51,17 @@ export const Auth = () => {
                                 })}
                             />
                             <span className='auth__placeholder'>Логин</span>
+                            <div className='auth__div-error'>
+                                {errors?.identifier && (
+                                    <span data-test-id='hint' className='auth__error'>
+                                        {errors?.identifier?.message}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div className='auth__div-input auth__input-password'>
                             <input
+                                name='password'
                                 className={errors?.password || isAuthError ? 'auth__input-error' : 'auth__input'}
                                 type={showPassword ? 'text' : 'password'}
                                 required={true}
@@ -60,18 +69,28 @@ export const Auth = () => {
                                     required: 'Поле не может быть пустым',
                                 })}
                             />
+                            <span className='auth__placeholder'>Пароль</span>
+                            <div className='auth__div-error'>
+                                {errors?.password && (
+                                    <span data-test-id='hint' className='auth__error'>
+                                        {errors?.password?.message}
+                                    </span>
+                                )}
+                            </div>
                             <button
                                 aria-label='auth__show-password'
                                 type='button'
+                                data-test-id={showPassword ? 'eye-opened' : 'eye-closed'}
                                 className={classNames('auth__button--show-password', { show: showPassword })}
                                 onClick={handleShowPassword}
                             />
-                            <span className='auth__placeholder'>Пароль</span>
                         </div>
                         <div>
                             {isAuthError ? (
                                 <React.Fragment>
-                                    <p className='auth__error'>Не верный логин или пароль!</p>
+                                    <span data-test-id='hint' className='auth__error'>
+                                        Неверный логин или пароль!
+                                    </span>
                                     <Link to='/forgot-pass'>
                                         <p className='auth__forgot-password'>Восстановить?</p>
                                     </Link>

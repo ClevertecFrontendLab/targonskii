@@ -12,7 +12,7 @@ export const ForgotPassword = () => {
     const isCode = searchParams.has('code');
 
     return (
-        <div className='auth-layout'>
+        <div data-test-id='auth' className='auth-layout'>
             <h3>Cleverland</h3>
             {isCode ? <ResetPass code={code} /> : <ForgotPass />}
         </div>
