@@ -26,7 +26,9 @@
     position: relative;
 }
 
-.reset-pass__green-mark-hide {
+.reset-pass__green-mark-hide,
+.forgot-pass__input:not(:focus) ~ .reset-pass__green-mark-show,
+.forgot-pass__input:not(:valid):focus ~ .reset-pass__green-mark-show {
     display: none;
 }
 

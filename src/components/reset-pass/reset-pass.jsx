@@ -22,7 +22,7 @@ export const ResetPass = ({ code }) => {
 
     const {
         register,
-        formState: { errors },
+        formState: { errors, isValid },
         handleSubmit,
     } = useForm({
         mode: 'all',
@@ -30,7 +30,6 @@ export const ResetPass = ({ code }) => {
 
     const toAuth = () => navigate('/auth');
     const toReg = () => window.location.reload();
-    // const onRepeatSubmit = () => regRequest(localData, onRequestFinally);
 
     const onClickForm = () => {
         switch (responseStatus) {
@@ -84,12 +83,16 @@ export const ResetPass = ({ code }) => {
                                 },
                             })}
                         />
-                        <img
-                            data-test-id='checkmark'
-                            className={errors?.password ? 'reset-pass__green-mark-hide' : 'reset-pass__green-mark-show'}
-                            src={greenMark}
-                            alt='green-mark'
-                        />
+                        {errors?.password && (
+                            <img
+                                data-test-id='checkmark'
+                                className={
+                                    errors?.password ? 'reset-pass__green-mark-show' : 'reset-pass__green-mark-hide'
+                                }
+                                src={greenMark}
+                                alt='green-mark'
+                            />
+                        )}
                         <span className='forgot-pass__placeholder'>Новый пароль</span>
                         {errors?.password ? (
                             <span data-test-id='hint' className='auth__error'>
@@ -135,7 +138,7 @@ export const ResetPass = ({ code }) => {
                             onClick={handleShowConfPassword}
                         />
                     </div>
-                    <button className='forgot-pass__button--submit' type='submit'>
+                    <button className='forgot-pass__button--submit' type='submit' disabled={!isValid}>
                         СОХРАНИТЬ ИЗМЕНЕНИЯ
                     </button>
                     <p className='reset-pass__info'>После сохранения войдите в библиотеку, используя новый пароль</p>

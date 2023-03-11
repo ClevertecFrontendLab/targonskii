@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import classNames from 'classnames';
 
 import arrowAuth from '../../assets/images/arrow-forget.svg';
 import arrowReg from '../../assets/images/arrow-reg.svg';
+import { FORGOT_PASSWORD } from '../../constants/responce-status';
 import { apiForgotPassword } from '../../constants/urls';
+import { FormWarning } from '../form-warning/form-warning';
 import { Loading } from '../loading/loading.jsx';
 
 import '../../assets/styles/auth-layout.css';
@@ -15,6 +16,7 @@ import '../../pages/forgot-password/forgot-password.css';
 export const ForgotPass = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showStatus, setShowStatus] = useState(false);
+    const [serverError, setServerError] = useState(false);
 
     const {
         register,
@@ -35,16 +37,24 @@ export const ForgotPass = () => {
                 }
             })
             .catch((error) => {
-                console.log(error.response.status);
+                if (error.response.status) {
+                    setServerError(true);
+                }
             })
             .finally(() => setIsLoading(false));
     };
 
     return isLoading ? (
         <Loading />
+    ) : showStatus ? (
+        <FormWarning status={FORGOT_PASSWORD[200]} />
     ) : (
+        // <div data-test-id='status-block' className='form-warning'>
+        //     <h4>Письмо выслано</h4>
+        //     <p>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
+        // </div>
         <form data-test-id='send-email-form' action='' onSubmit={handleSubmit(onSubmit)}>
-            <div className={classNames('forgot-pass-layout__form', { 'server-response': showStatus })}>
+            <div className='forgot-pass-layout__form'>
                 <div className='forgot-pass__auth'>
                     <Link to='/auth'>
                         <img src={arrowAuth} alt='arrowAuth' />
@@ -72,6 +82,11 @@ export const ForgotPass = () => {
                                 {errors?.email.message}
                             </span>
                         )}
+                        {serverError && (
+                            <span data-test-id='hint' className='forgot-pass__error'>
+                                error
+                            </span>
+                        )}
                         <p className='forgot-pass__hint'>
                             На это email будет отправлено письмо с инструкциями по восстановлению пароля
                         </p>
@@ -88,16 +103,6 @@ export const ForgotPass = () => {
                     </div>
                 </div>
             </div>
-            {showStatus && (
-                <div data-test-id='status-block' className='form-warning'>
-                    <h4>Письмо выслано</h4>
-                    <p>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
-                </div>
-            )}
-            {/* <div data-test-id='status-block' className={classNames('form-warning', { 'server-error': showStatus })}>
-                <h4>Письмо выслано</h4>
-                <p>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
-            </div> */}
         </form>
     );
 };

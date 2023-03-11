@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import { FormWarning } from '../../components/form-warning/form-warning';
 import { Loading } from '../../components/loading/loading.jsx';
@@ -13,6 +14,14 @@ import './registration.css';
 
 export const Registration = () => {
     const navigate = useNavigate();
+    const user = Cookies.get('token');
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
     const [step, setStep] = useState(1);
     const [localData, setLocalData] = useState(null);
     const handleStep = () => {

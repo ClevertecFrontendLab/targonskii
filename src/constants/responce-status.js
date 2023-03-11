@@ -41,3 +41,11 @@ export const STATUS_REGISTRATION = {
         buttonText: 'ПОВТОРИТЬ',
     }
 };
+
+export const FORGOT_PASSWORD = {
+    200: {
+        title: 'Письмо выслано',
+        info: 'Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля',
+        buttonText: '',
+    }
+}

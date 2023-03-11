@@ -110,6 +110,7 @@ body {
     letter-spacing: 0.2px;
     color: var(--white);
     cursor: pointer;
+    text-transform: uppercase;
     outline: none;
 }
 
@@ -189,6 +190,7 @@ body {
         color: var(--white);
         cursor: pointer;
         outline: none;
+        text-transform: uppercase;
     }
 
     .auth__registration {

@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import classNames from 'classnames';
 
 import arrow from '../../assets/images/arrow-reg.svg';
 import { setRegistration } from '../../redux/registration/registration-slice';
@@ -15,12 +14,11 @@ export const RegistrationStep2 = ({ onClick }) => {
         formState: { errors, isValid },
         handleSubmit,
     } = useForm({
-        mode: 'onBlur',
+        mode: 'all',
     });
     const handleStep = () => onClick();
 
     const onSubmit = (data) => {
-        console.log(data);
         handleStep();
         dispatch(setRegistration(data));
     };

@@ -124,7 +124,9 @@ body {
     padding-left: 15px;
 }
 
-.registration__green-mark-hide {
+.registration__green-mark-hide,
+.registration__input-password input:not(:focus) ~ .registration__green-mark-show,
+.registration__input-password input:not(:valid):focus ~ .registration__green-mark-show {
     display: none;
 }
 

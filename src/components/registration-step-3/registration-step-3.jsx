@@ -1,8 +1,10 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 
 import arrow from '../../assets/images/arrow-reg.svg';
+
+import { PHONE_MASK, phoneValidateRules } from './validate';
 
 import '../../assets/styles/auth-layout.css';
 
@@ -11,12 +13,12 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
         register,
         formState: { errors, isValid },
         handleSubmit,
+        control,
     } = useForm({
         mode: 'onBlur',
     });
 
     const onSubmit = (data) => {
-        console.log(data);
         onSubmitForm({ ...data });
     };
 
@@ -25,35 +27,22 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
             <h4 className='registration__title'>Регистрация</h4>
             <h5>3 шаг из 3</h5>
             <div className='registration__input'>
-                <MaskedInput
+                <Controller
+                    type='tel'
                     name='phone'
-                    className={errors?.phone ? 'auth__input-error' : 'auth__input'}
-                    required={true}
-                    mask={[
-                        '+',
-                        '3',
-                        '7',
-                        '5',
-                        ' ',
-                        '(',
-                        /\d/,
-                        /\d/,
-                        ')',
-                        ' ',
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        '-',
-                        /\d/,
-                        /\d/,
-                        '-',
-                        /\d/,
-                        /\d/,
-                    ]}
-                    {...register('phone', {
-                        required: 'В формате +375 (xx) xxx-xx-xx',
-                        pattern: /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
-                    })}
+                    rules={phoneValidateRules}
+                    control={control}
+                    render={({ field }) => (
+                        <MaskedInput
+                            className={errors?.phone ? 'auth__input-error' : 'auth__input'}
+                            mask={PHONE_MASK}
+                            placeholderChar='x'
+                            {...field}
+                        />
+                    )}
+                    // {...register('phone', {
+                    //     required: 'Поле не может быть пустым',
+                    // })}
                 />
                 <span className='registration__placeholder'>Номер телефона</span>
                 {errors?.phone ? (
