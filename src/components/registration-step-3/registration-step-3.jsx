@@ -40,9 +40,9 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
                             {...field}
                         />
                     )}
-                    // {...register('phone', {
-                    //     required: 'Поле не может быть пустым',
-                    // })}
+                    {...register('phone', {
+                        required: 'Поле не может быть пустым',
+                    })}
                 />
                 <span className='registration__placeholder'>Номер телефона</span>
                 {errors?.phone ? (
@@ -62,14 +62,14 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
                     className={errors?.email ? 'auth__input-error' : 'auth__input'}
                     required={true}
                     {...register('email', {
-                        required: 'Введите корректный e-mail',
-                        pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                        required: 'Поле не может быть пустым',
+                        pattern: { value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, message: 'Введите корректный e-mail' },
                     })}
                 />
                 <span className='registration__placeholder'>E-mail</span>
                 {errors?.email && (
                     <span data-test-id='hint' className='auth__error'>
-                        {errors?.email?.message}
+                        {errors?.email.message}
                     </span>
                 )}
             </div>

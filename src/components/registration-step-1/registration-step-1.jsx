@@ -93,12 +93,14 @@ export const RegistrationStep1 = ({ onClick }) => {
                         </span>
                     )}
                 </div>
-                <img
-                    data-test-id='checkmark'
-                    className={errors?.password ? 'registration__green-mark-hide' : 'registration__green-mark-show'}
-                    src={greenMark}
-                    alt='green-mark'
-                />
+                {errors?.password && (
+                    <img
+                        data-test-id='checkmark'
+                        className={errors?.password ? 'registration__green-mark-hide' : 'registration__green-mark-show'}
+                        src={greenMark}
+                        alt='green-mark'
+                    />
+                )}
                 <button
                     data-test-id={showPassword ? 'eye-opened' : 'eye-closed'}
                     aria-label='auth__show-password'

@@ -44,15 +44,11 @@ export const ForgotPass = () => {
             .finally(() => setIsLoading(false));
     };
 
-    return isLoading ? (
-        <Loading />
-    ) : showStatus ? (
+    return showStatus ? (
         <FormWarning status={FORGOT_PASSWORD[200]} />
+    ) : isLoading ? (
+        <Loading />
     ) : (
-        // <div data-test-id='status-block' className='form-warning'>
-        //     <h4>Письмо выслано</h4>
-        //     <p>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
-        // </div>
         <form data-test-id='send-email-form' action='' onSubmit={handleSubmit(onSubmit)}>
             <div className='forgot-pass-layout__form'>
                 <div className='forgot-pass__auth'>
