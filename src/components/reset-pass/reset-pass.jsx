@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -22,11 +23,33 @@ export const ResetPass = ({ code }) => {
 
     const {
         register,
+        watch,
         formState: { errors, isValid },
         handleSubmit,
+        getFieldState,
     } = useForm({
         mode: 'all',
+        criteriaMode: 'all',
+        resetOptions: {
+            keepErrors: true,
+        },
     });
+
+    const hasError = errors.password;
+
+    const hasRequiredError = hasError && errors.password.types.required;
+    const hasDigitError = hasError && errors.password.types.hasDigit;
+    const hasCapitalLetterError = hasError && errors.password.types.hasCapitalLetter;
+    const hasMinLengthError = hasError && errors.password.types.minLength;
+    const hasPassFieldErrors = hasMinLengthError || hasDigitError || hasCapitalLetterError;
+
+    const hasErrorPassConf = errors.passwordConfirmation;
+
+    const hasRequiredErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.required;
+    const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasDigit;
+    const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasCapitalLetter;
+    const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.minLength;
+    const hasPassConfFieldErrors = hasMinLengthError || hasDigitError || hasCapitalLetterError;
 
     const toAuth = () => navigate('/auth');
     const toReg = () => window.location.reload();
@@ -72,37 +95,42 @@ export const ResetPass = ({ code }) => {
                             required={true}
                             className={errors?.password ? 'forgot-pass__input-error' : 'forgot-pass__input'}
                             {...register('password', {
-                                required: 'Поле не может быть пустым',
-                                minLength: {
-                                    value: 8,
-                                    message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-                                },
-                                pattern: {
-                                    value: /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-                                    message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+                                minLength: { value: 8 },
+                                validate: {
+                                    required: (v) =>
+                                        v.length !== 0 ||
+                                        getFieldState('password').isDirty ||
+                                        'Поле не может быть пустым',
+                                    hasDigit: (v) => Boolean(v.match(/\d/g)),
+                                    hasCapitalLetter: (v) => Boolean(v.match(/[A-Z]/g)),
                                 },
                             })}
                         />
-                        {errors?.password && (
+                        {hasRequiredError ? (
+                            <span data-test-id='hint' className='auth__error'>
+                                {errors?.password?.message}
+                            </span>
+                        ) : (
+                            <span
+                                data-test-id='hint'
+                                className={classNames('registration__hint', {
+                                    hasErrors: hasPassFieldErrors,
+                                })}
+                            >
+                                Пароль <span className={hasMinLengthError && 'isError'}>не менее 8 символов</span>, с{' '}
+                                <span className={hasCapitalLetterError && 'isError'}>заглавной буквой</span> и{' '}
+                                <span className={hasDigitError && 'isError'}>цифрой</span>
+                            </span>
+                        )}
+                        {!getFieldState('password').invalid && getFieldState('password').isDirty && (
                             <img
                                 data-test-id='checkmark'
-                                className={
-                                    errors?.password ? 'reset-pass__green-mark-show' : 'reset-pass__green-mark-hide'
-                                }
+                                className='reset-pass__green-mark-show'
                                 src={greenMark}
                                 alt='green-mark'
                             />
                         )}
                         <span className='forgot-pass__placeholder'>Новый пароль</span>
-                        {errors?.password ? (
-                            <span data-test-id='hint' className='auth__error'>
-                                {errors?.password?.message}
-                            </span>
-                        ) : (
-                            <span data-test-id='hint' className='registration__hint'>
-                                Пароль не менее 8 символов, с заглавной буквой и цифрой
-                            </span>
-                        )}
                         <button
                             data-test-id={showPassword ? 'eye-opened' : 'eye-closed'}
                             aria-label='reset__button-password'
@@ -119,16 +147,31 @@ export const ResetPass = ({ code }) => {
                             className={errors?.passwordConfirmation ? 'forgot-pass__input-error' : 'forgot-pass__input'}
                             {...register('passwordConfirmation', {
                                 required: 'Поле не может быть пустым',
-                                minLength: {
-                                    value: 8,
-                                    message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-                                },
-                                pattern: {
-                                    value: /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-                                    message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+                                minLength: { value: 8 },
+                                validate: {
+                                    required: (v) => v === watch('password') || 'Пароли не совпадают',
+                                    hasDigit: (v) => Boolean(v.match(/\d/g)),
+                                    hasCapitalLetter: (v) => Boolean(v.match(/[A-Z]/g)),
                                 },
                             })}
                         />
+                        {hasRequiredErrorPassConf ? (
+                            <span data-test-id='hint' className='auth__error'>
+                                {errors?.passwordConfirmation?.message}
+                            </span>
+                        ) : (
+                            <span
+                                data-test-id='hint'
+                                className={classNames('registration__hint', {
+                                    hasErrorPassConf: hasPassConfFieldErrors,
+                                })}
+                            >
+                                Пароль{' '}
+                                <span className={hasMinLengthErrorPassConf && 'isError'}>не менее 8 символов</span>, с{' '}
+                                <span className={hasCapitalLetterErrorPassConf && 'isError'}>заглавной буквой</span> и{' '}
+                                <span className={hasDigitErrorPassConf && 'isError'}>цифрой</span>
+                            </span>
+                        )}
                         <span className='reset-pass-conf__placeholder'>Повторите пароль</span>
                         <button
                             data-test-id={showConfPassword ? 'eye-opened' : 'eye-closed'}

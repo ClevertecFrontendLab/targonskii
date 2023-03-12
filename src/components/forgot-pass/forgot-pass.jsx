@@ -32,7 +32,7 @@ export const ForgotPass = () => {
         axios
             .post(apiForgotPassword, { ...data })
             .then((response) => {
-                if (response.data.ok) {
+                if (response.status === 200) {
                     setShowStatus(true);
                 }
             })

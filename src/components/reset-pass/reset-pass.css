@@ -26,12 +26,6 @@
     position: relative;
 }
 
-.reset-pass__green-mark-hide,
-.forgot-pass__input:not(:focus) ~ .reset-pass__green-mark-show,
-.forgot-pass__input:not(:valid):focus ~ .reset-pass__green-mark-show {
-    display: none;
-}
-
 .reset-pass__green-mark-show {
     display: block;
     position: absolute;
@@ -88,6 +82,14 @@
     line-height: 24px;
     letter-spacing: 0.1px;
     color: var(--grey70);
+}
+
+.registration__hint span.isError {
+    color: var(--negative);
+}
+
+input:not(:focus) + .registration__hint.hasErrors {
+    color: var(--negative);
 }
 
 @media only screen and (max-width: 320px) {

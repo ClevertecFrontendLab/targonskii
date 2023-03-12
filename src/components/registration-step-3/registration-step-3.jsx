@@ -15,7 +15,7 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
         handleSubmit,
         control,
     } = useForm({
-        mode: 'onBlur',
+        mode: 'all',
     });
 
     const onSubmit = (data) => {
@@ -34,15 +34,15 @@ export const RegistrationStep3 = ({ onSubmitForm }) => {
                     control={control}
                     render={({ field }) => (
                         <MaskedInput
+                            {...register('phone', {
+                                required: 'Поле не может быть пустым',
+                            })}
                             className={errors?.phone ? 'auth__input-error' : 'auth__input'}
                             mask={PHONE_MASK}
                             placeholderChar='x'
                             {...field}
                         />
                     )}
-                    {...register('phone', {
-                        required: 'Поле не может быть пустым',
-                    })}
                 />
                 <span className='registration__placeholder'>Номер телефона</span>
                 {errors?.phone ? (
