@@ -16,6 +16,8 @@ import './reset-pass.css';
 
 export const ResetPass = ({ code }) => {
     const navigate = useNavigate();
+    const [fieldFocus, setFieldFocus] = useState(false);
+    const [fieldError, setFieldError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfPassword, setShowConfPassword] = useState(false);
 
@@ -45,13 +47,15 @@ export const ResetPass = ({ code }) => {
 
     const hasErrorPassConf = errors.passwordConfirmation;
 
-    const hasRequiredErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.required;
-    const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasDigit;
-    const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasCapitalLetter;
-    const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.minLength;
-    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasSamePassConf;
+    const hasRequiredErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.required;
+    const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasDigit;
+    const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasCapitalLetter;
+    const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.minLength;
+    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasSamePassConf;
     const hasPassConfFieldErrors =
         hasSamePassConf || hasMinLengthErrorPassConf || hasCapitalLetterErrorPassConf || hasRequiredErrorPassConf;
+
+    const isPasswordsSame = watch('passwordConfirmation') === watch('password');
 
     const toAuth = () => navigate('/auth');
     const toReg = () => window.location.reload();
@@ -151,16 +155,26 @@ export const ResetPass = ({ code }) => {
                                 required: 'Поле не может быть пустым',
                                 minLength: { value: 8 },
                                 validate: {
-                                    hasSamePassConf: (v) => v === watch('password') || 'Пароли не совпадают',
                                     hasDigit: (v) => Boolean(v.match(/\d/g)),
                                     hasCapitalLetter: (v) => Boolean(v.match(/[A-Z]/g)),
                                 },
                             })}
+                            onBlur={(e) => {
+                                setFieldFocus(true);
+                                console.log(e.target.value);
+                                if (e.target.value === '') {
+                                    setFieldError('Поле не может быть пустым');
+                                }
+                            }}
+                            onFocus={() => setFieldFocus(false)}
                         />
-                        {hasRequiredErrorPassConf || hasSamePassConf ? (
+                        {hasRequiredErrorPassConf ||
+                        (fieldError && !watch('passwordConfirmation')) ||
+                        (fieldFocus && !isPasswordsSame && getFieldState('passwordConfirmation').isDirty) ? (
                             <span data-test-id='hint' className='auth__error'>
                                 {errors?.passwordConfirmation?.types?.required ||
-                                    errors?.passwordConfirmation?.types?.hasSamePassConf}
+                                    (!watch('passwordConfirmation') && fieldError && 'Поле не может быть пустым') ||
+                                    (fieldFocus && !isPasswordsSame && 'Пароли не совпадают')}
                             </span>
                         ) : (
                             <span
