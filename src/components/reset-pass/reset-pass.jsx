@@ -49,8 +49,9 @@ export const ResetPass = ({ code }) => {
     const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasDigit;
     const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasCapitalLetter;
     const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.minLength;
-    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation.types.isSamePass;
-    const hasPassConfFieldErrors = hasSamePassConf || hasMinLengthError || hasDigitError || hasCapitalLetterError;
+    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasSamePassConf;
+    const hasPassConfFieldErrors =
+        hasSamePassConf || hasMinLengthErrorPassConf || hasCapitalLetterErrorPassConf || hasRequiredErrorPassConf;
 
     const toAuth = () => navigate('/auth');
     const toReg = () => window.location.reload();
@@ -156,10 +157,10 @@ export const ResetPass = ({ code }) => {
                                 },
                             })}
                         />
-                        {hasSamePassConf || hasRequiredErrorPassConf ? (
+                        {hasRequiredErrorPassConf || hasSamePassConf ? (
                             <span data-test-id='hint' className='auth__error'>
-                                {errors?.passwordConfirmation?.type?.hasSamePassConf ||
-                                    errors?.passwordConfirmation?.type?.hasRequiredErrorPassConf}
+                                {errors?.passwordConfirmation?.types?.required ||
+                                    errors?.passwordConfirmation?.types?.hasSamePassConf}
                             </span>
                         ) : (
                             <span
