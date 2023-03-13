@@ -51,9 +51,8 @@ export const ResetPass = ({ code }) => {
     const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasDigit;
     const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasCapitalLetter;
     const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.minLength;
-    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation?.types?.hasSamePassConf;
     const hasPassConfFieldErrors =
-        hasSamePassConf || hasMinLengthErrorPassConf || hasCapitalLetterErrorPassConf || hasRequiredErrorPassConf;
+        hasMinLengthErrorPassConf || hasCapitalLetterErrorPassConf || hasRequiredErrorPassConf;
 
     const isPasswordsSame = watch('passwordConfirmation') === watch('password');
 
