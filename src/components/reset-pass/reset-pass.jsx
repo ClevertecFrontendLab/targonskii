@@ -49,7 +49,8 @@ export const ResetPass = ({ code }) => {
     const hasDigitErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasDigit;
     const hasCapitalLetterErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.hasCapitalLetter;
     const hasMinLengthErrorPassConf = hasErrorPassConf && errors.passwordConfirmation.types.minLength;
-    const hasPassConfFieldErrors = hasMinLengthError || hasDigitError || hasCapitalLetterError;
+    const hasSamePassConf = hasErrorPassConf && errors.passwordConfirmation.types.isSamePass;
+    const hasPassConfFieldErrors = hasSamePassConf || hasMinLengthError || hasDigitError || hasCapitalLetterError;
 
     const toAuth = () => navigate('/auth');
     const toReg = () => window.location.reload();
@@ -149,15 +150,16 @@ export const ResetPass = ({ code }) => {
                                 required: 'Поле не может быть пустым',
                                 minLength: { value: 8 },
                                 validate: {
-                                    required: (v) => v === watch('password') || 'Пароли не совпадают',
+                                    hasSamePassConf: (v) => v === watch('password') || 'Пароли не совпадают',
                                     hasDigit: (v) => Boolean(v.match(/\d/g)),
                                     hasCapitalLetter: (v) => Boolean(v.match(/[A-Z]/g)),
                                 },
                             })}
                         />
-                        {hasRequiredErrorPassConf ? (
+                        {hasSamePassConf || hasRequiredErrorPassConf ? (
                             <span data-test-id='hint' className='auth__error'>
-                                {errors?.passwordConfirmation?.message}
+                                {errors?.passwordConfirmation?.type?.hasSamePassConf ||
+                                    errors?.passwordConfirmation?.type?.hasRequiredErrorPassConf}
                             </span>
                         ) : (
                             <span
