@@ -6,7 +6,6 @@ import { BookCardList } from '../book-card-list/book-card-list.jsx';
 import './books-list.css';
 
 export const BooksList = ({ filteredBooks }) => {
-    // const getCategory = useCategoryByName;
     const categories = useCategoryByName();
 
     return (

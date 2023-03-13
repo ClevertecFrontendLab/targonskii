@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import { apiCategoriesUrl } from '../../constants/urls.js';
 
@@ -6,18 +8,27 @@ export const fetchCategories = createAsyncThunk(
     'categories/fetchCategories',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch(apiCategoriesUrl);
+            const response = await axios.get(apiCategoriesUrl);
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Server Error');
             }
-            const data = await response.json();
 
-            return data;
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.message)
         }
     },
+    axios.interceptors.request.use((config) => {
+        const token = Cookies.get('token')
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config
+    }
+    )
 )
 
 const categoriesSlice = createSlice({
