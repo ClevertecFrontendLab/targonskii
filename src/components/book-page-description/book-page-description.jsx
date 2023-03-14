@@ -8,9 +8,11 @@ import { Slider } from '../slider/slider';
 
 import './book-page-description.css';
 
-export const BookPageDescription = ({ bookCard }) => {
+export const BookPageDescription = ({ bookCard, setIsShow }) => {
     const [isHide, setIsHide] = useState(true);
     const { genre } = useParams();
+
+    // const handleReviewModal = (prev) => onClick(!prev);
 
     return (
         <div className='book-page'>
@@ -126,7 +128,7 @@ export const BookPageDescription = ({ bookCard }) => {
                                 ))}
                             </div>
                         )}
-                        <button data-test-id='button-rating' type='button'>
+                        <button data-test-id='button-rating' type='button' onClick={setIsShow}>
                             Оценить книгу
                         </button>
                     </div>

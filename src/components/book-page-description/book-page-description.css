@@ -92,8 +92,6 @@
     width: 350px;
     height: 52px;
     border-radius: 26px;
-    border: none;
-    background: linear-gradient(var(--btn-hover));
     font-weight: 600;
     font-size: 16px;
     line-height: 150%;
@@ -102,7 +100,6 @@
     align-items: center;
     letter-spacing: 0.2px;
     text-transform: uppercase;
-    color: var(--white);
     margin-bottom: 62px;
 }
 
